@@ -57,3 +57,50 @@ describe("stop.sh", () => {
     expect(result.status).toBe(0);
   });
 });
+
+describe("pre-tool-use.sh", () => {
+  let tmp: string;
+
+  beforeEach(() => {
+    tmp = mkdtempSync(join(tmpdir(), "sc-pre-"));
+  });
+
+  afterEach(() => {
+    rmSync(tmp, { recursive: true, force: true });
+  });
+
+  test("warns when tool is Edit and no <thinking> in recent context", () => {
+    const transcript = "User: do the thing\nAssistant: ok let me read the file";
+    const transcriptFile = join(tmp, "transcript.txt");
+    require("node:fs").writeFileSync(transcriptFile, transcript);
+
+    const result = spawnSync("bash", [join(HOOK_DIR, "pre-tool-use.sh")], {
+      cwd: tmp,
+      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: transcriptFile, CLAUDE_TOOL_NAME: "Edit" },
+    });
+    expect(result.status).toBe(0); // never blocks
+    expect(result.stderr.toString()).toContain("think-first");
+  });
+
+  test("silent when <thinking> present in recent context", () => {
+    const transcript = "User: do the thing\nAssistant: <thinking>plan</thinking>\nlet's edit";
+    const transcriptFile = join(tmp, "transcript.txt");
+    require("node:fs").writeFileSync(transcriptFile, transcript);
+
+    const result = spawnSync("bash", [join(HOOK_DIR, "pre-tool-use.sh")], {
+      cwd: tmp,
+      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: transcriptFile, CLAUDE_TOOL_NAME: "Edit" },
+    });
+    expect(result.status).toBe(0);
+    expect(result.stderr.toString()).not.toContain("think-first");
+  });
+
+  test("silent for read-only tools", () => {
+    const result = spawnSync("bash", [join(HOOK_DIR, "pre-tool-use.sh")], {
+      cwd: tmp,
+      env: { ...process.env, CLAUDE_TOOL_NAME: "Read" },
+    });
+    expect(result.status).toBe(0);
+    expect(result.stderr.toString()).toBe("");
+  });
+});
