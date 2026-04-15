@@ -64,4 +64,4 @@ Compiled truth is your *current best model*. When evidence contradicts it:
 
 ## With gbrain
 
-If `gbrain` is the storage backend, the file format is identical (gbrain reads markdown), but the agent should also call `gbrain sync` after writes so the retrieval index updates. The Stop hook handles this automatically.
+If `gbrain` is the storage backend, the file format is identical (gbrain reads markdown), but the agent should also call `gbrain sync` after writes so the retrieval index updates. The Stop hook will trigger this when the gbrain bridge is enabled in `settings.json`.

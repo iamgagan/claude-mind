@@ -1,7 +1,7 @@
 ---
 name: using-super-claude
 description: Read this once per session — the five-thinker mental model and how all Super Claude skills fit together
-when-to-use: At the start of any session where Super Claude is installed; when the user invokes `/sc-help`
+when-to-use: At the start of any session where Super Claude is installed; when a user asks how the plugin's pieces fit together
 ---
 
 # Using Super Claude

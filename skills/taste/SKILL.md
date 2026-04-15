@@ -1,7 +1,7 @@
 ---
 name: taste
 description: Ship gate — invoked before any commit, PR, or release; one question, then act
-when-to-use: Before `git commit`, `gh pr create`, `npm publish`, version-tag pushes; invoked by /ship command
+when-to-use: Before `git commit`, `gh pr create`, `bun publish` / `npm publish`, version-tag pushes; invoked by /ship command
 ---
 
 # Taste
