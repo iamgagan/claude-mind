@@ -21,7 +21,7 @@ A Claude Code plugin that synthesizes the engineering philosophy of five practit
 After install, in any project repo:
 
 ```bash
-/sc init        # scaffold ./brain/ and settings
+/sc-init        # scaffold ./brain/ and settings
 /recall         # check what the brain already knows
 /remember <note>  # capture mid-session
 /ship           # taste gate before commit/PR
