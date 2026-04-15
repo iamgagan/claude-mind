@@ -9,7 +9,7 @@
     "lint:hooks": "bun test test/hooks.test.ts"
   },
   "devDependencies": {
-    "@types/bun": "latest",
+    "@types/bun": "^1.3.0",
     "gray-matter": "^4.0.3"
   }
 }
