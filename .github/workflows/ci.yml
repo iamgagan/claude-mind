@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Install deps
+        run: bun install --frozen-lockfile
+
+      - name: Lint shell hooks
+        run: |
+          sudo apt-get update && sudo apt-get install -y shellcheck
+          shellcheck hooks/*.sh
+
+      - name: Run tests
+        run: bun test
+
+      - name: Verify hooks executable
+        run: |
+          for h in hooks/*.sh; do
+            test -x "$h" || { echo "$h is not executable"; exit 1; }
+          done
