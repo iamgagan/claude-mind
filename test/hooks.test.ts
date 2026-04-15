@@ -104,3 +104,42 @@ describe("pre-tool-use.sh", () => {
     expect(result.stderr.toString()).toBe("");
   });
 });
+
+describe("user-prompt-submit.sh", () => {
+  let tmp: string;
+
+  beforeEach(() => {
+    tmp = mkdtempSync(join(tmpdir(), "sc-ups-"));
+    mkdirSync(join(tmp, "brain"));
+  });
+
+  afterEach(() => {
+    rmSync(tmp, { recursive: true, force: true });
+  });
+
+  test("returns immediately (non-blocking) and spawns subprocess", () => {
+    const start = Date.now();
+    const result = spawnSync("bash", [join(HOOK_DIR, "user-prompt-submit.sh")], {
+      cwd: tmp,
+      input: "Let's switch from JWT to opaque tokens",
+      env: {
+        ...process.env,
+        CLAUDE_PLUGIN_ROOT: join(import.meta.dir, ".."),
+        PATH: `${join(import.meta.dir, "fixtures", "bin")}:${process.env.PATH}`,
+      },
+    });
+    const elapsed = Date.now() - start;
+    expect(result.status).toBe(0);
+    expect(elapsed).toBeLessThan(1000); // returns fast; doesn't wait for subprocess
+  });
+
+  test("exits 0 silently when ./brain/ missing", () => {
+    rmSync(join(tmp, "brain"), { recursive: true });
+    const result = spawnSync("bash", [join(HOOK_DIR, "user-prompt-submit.sh")], {
+      cwd: tmp,
+      input: "anything",
+      env: { ...process.env },
+    });
+    expect(result.status).toBe(0);
+  });
+});
