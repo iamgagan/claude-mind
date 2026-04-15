@@ -50,7 +50,9 @@ describe("stop.sh", () => {
   test("exits 0 silently if claude CLI missing", () => {
     const result = spawnSync("bash", [join(HOOK_DIR, "stop.sh")], {
       cwd: tmp,
-      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: join(FIXTURE_DIR, "transcript-minimal.txt"), PATH: "/usr/bin" },
+      // PATH includes /bin and /usr/bin so bash itself resolves, but excludes
+      // test/fixtures/bin so the fake `claude` shim is unreachable.
+      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: join(FIXTURE_DIR, "transcript-minimal.txt"), PATH: "/bin:/usr/bin" },
     });
     expect(result.status).toBe(0);
   });
