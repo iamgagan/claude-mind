@@ -1,0 +1,4 @@
+User: refactor the auth middleware to use the new token store
+Assistant: <thinking>The middleware lives in src/auth/middleware.ts. I need to swap the old token-store import for the new one and update the call site.</thinking>
+[edits src/auth/middleware.ts]
+User: looks good, ship it
