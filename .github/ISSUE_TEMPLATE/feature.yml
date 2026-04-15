@@ -1,0 +1,22 @@
+name: Feature proposal
+description: Propose a new skill, command, or hook
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed shape
+      description: What's the smallest version that solves the problem?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Why not just use an existing skill or another plugin?

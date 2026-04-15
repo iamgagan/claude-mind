@@ -1,0 +1,30 @@
+name: Bug report
+description: Something doesn't work as documented
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: One paragraph. Include the skill/command/hook that misbehaved.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect?
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: Steps. Include any relevant `settings.json` keys.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Super Claude version
+    validations:
+      required: true
