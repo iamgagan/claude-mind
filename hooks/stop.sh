@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Super Claude — Stop hook
+# Claude Mind — Stop hook
 # Synthesizes the session transcript into ./brain/_journal.md
 # Fails closed: never errors the user's session.
 

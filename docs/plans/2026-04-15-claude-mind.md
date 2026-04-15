@@ -1,10 +1,10 @@
-# Super Claude Implementation Plan
+# Claude Mind Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use `superpowers:subagent-driven-development` (recommended) or `superpowers:executing-plans` to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build and publish a Claude Code plugin that synthesizes Karpathy, Chang, Cherny, IndyDevDan, and Garry Tan into one tightly-curated package — 10 skills, 3 hooks, 4 commands, brain-first memory protocol, marketplace-ready.
 
-**Architecture:** Thin harness, fat skills. All intelligence lives in the SKILL.md content; bash hooks under 50 lines each; markdown-only brain by default with optional `gbrain` bridge. See spec at [`../specs/2026-04-15-super-claude-design.md`](../specs/2026-04-15-super-claude-design.md).
+**Architecture:** Thin harness, fat skills. All intelligence lives in the SKILL.md content; bash hooks under 50 lines each; markdown-only brain by default with optional `gbrain` bridge. See spec at [`../specs/2026-04-15-claude-mind-design.md`](../specs/2026-04-15-claude-mind-design.md).
 
 **Tech Stack:** Bash (hooks), Markdown (skills/commands/docs), TypeScript + Bun (tests/CI), GitHub Actions (CI/release).
 
@@ -69,7 +69,7 @@
 - [ ] **Step 1: Init repo and create .gitignore**
 
 ```bash
-cd /Users/gagan/Projects/super-claude
+cd /Users/gagan/Projects/claude-mind
 git init
 ```
 
@@ -92,7 +92,7 @@ dist/
 - [ ] **Step 2: First commit (spec only)**
 
 ```bash
-git add docs/specs/2026-04-15-super-claude-design.md docs/plans/2026-04-15-super-claude.md .gitignore
+git add docs/specs/2026-04-15-claude-mind-design.md docs/plans/2026-04-15-claude-mind.md .gitignore
 git commit -m "chore: initial commit — design spec + implementation plan"
 ```
 
@@ -110,12 +110,12 @@ Expected: commit succeeds with three files.
 
 ```json
 {
-  "name": "super-claude",
+  "name": "claude-mind",
   "version": "0.1.0",
   "description": "The opinionated senior-engineer brain for Claude Code. Karpathy + Chang + Cherny + IndyDevDan + Tan, synthesized.",
-  "author": "<your-handle>",
+  "author": "iamgagan",
   "license": "MIT",
-  "homepage": "https://github.com/<your-handle>/super-claude",
+  "homepage": "https://github.com/iamgagan/claude-mind",
   "skills": "./skills",
   "commands": "./commands",
   "hooks": {
@@ -131,7 +131,7 @@ Expected: commit succeeds with three files.
 ```
 MIT License
 
-Copyright (c) 2026 <your-name>
+Copyright (c) 2026 Gagan
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -169,7 +169,7 @@ git commit -m "chore: add plugin manifest and MIT license"
 - [ ] **Step 1: Write README skeleton (final polish in Phase 9)**
 
 ```markdown
-# Super Claude
+# Claude Mind
 
 > The opinionated senior-engineer brain for Claude Code.
 
@@ -228,7 +228,7 @@ git commit -m "docs: README skeleton"
 
 ```json
 {
-  "name": "super-claude",
+  "name": "claude-mind",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -485,7 +485,7 @@ git commit -m "test: hook test scaffold + fixtures (red)"
 - [ ] **Step 1: Write the resolver**
 
 ```markdown
-# Super Claude — Skill Resolver
+# Claude Mind — Skill Resolver
 
 This file routes user intent to the right skill. Read this first on any non-trivial task.
 
@@ -515,7 +515,7 @@ This file routes user intent to the right skill. Read this first on any non-triv
 
 ## Discovery
 
-- `using-super-claude` — read this once per session for the full mental model.
+- `using-claude-mind` — read this once per session for the full mental model.
 ```
 
 - [ ] **Step 2: Run skills test (still expect failures — no skill dirs)**
@@ -535,23 +535,23 @@ git commit -m "feat(skills): add RESOLVER.md"
 
 ---
 
-### Task 2.2: `using-super-claude` entry skill
+### Task 2.2: `using-claude-mind` entry skill
 
 **Files:**
-- Create: `skills/using-super-claude/SKILL.md`
+- Create: `skills/using-claude-mind/SKILL.md`
 
 - [ ] **Step 1: Write the entry skill**
 
 ```markdown
 ---
-name: using-super-claude
-description: Read this once per session — the five-thinker mental model and how all Super Claude skills fit together
-when-to-use: At the start of any session where Super Claude is installed; when the user invokes `/sc help`
+name: using-claude-mind
+description: Read this once per session — the five-thinker mental model and how all Claude Mind skills fit together
+when-to-use: At the start of any session where Claude Mind is installed; when the user invokes `/sc help`
 ---
 
-# Using Super Claude
+# Using Claude Mind
 
-Super Claude is the synthesis of five practitioners' engineering philosophies, encoded as 10 skills, 3 hooks, and 4 commands. Read this once per session to understand how the pieces fit.
+Claude Mind is the synthesis of five practitioners' engineering philosophies, encoded as 10 skills, 3 hooks, and 4 commands. Read this once per session to understand how the pieces fit.
 
 ## The five contributors
 
@@ -577,9 +577,9 @@ Super Claude is the synthesis of five practitioners' engineering philosophies, e
 
 User prompt → UserPromptSubmit hook fires `signal-detector` (async) → agent reads `RESOLVER.md` → agent invokes the relevant skill(s) → PreToolUse hook checks for `<thinking>` before edits → Stop hook synthesizes session into brain at end.
 
-## When NOT to use Super Claude
+## When NOT to use Claude Mind
 
-Super Claude's opinions are strong. They're wrong for:
+Claude Mind's opinions are strong. They're wrong for:
 - One-line typo fixes (overhead exceeds value)
 - Greenfield prototypes where speed > taste
 - Codebases that have a different established philosophy you're contributing to
@@ -599,7 +599,7 @@ In those cases, disable via `settings.json` or use Claude Code without the plugi
 | `uv-python` | Python toolchain |
 | `bun-javascript` | JS/TS toolchain |
 | `taste` | Ship gate |
-| `using-super-claude` | This file |
+| `using-claude-mind` | This file |
 
 ## Commands
 
@@ -615,13 +615,13 @@ In those cases, disable via `settings.json` or use Claude Code without the plugi
 bun test test/skills.test.ts
 ```
 
-Expected: PASS for `using-super-claude` (frontmatter + body word count + RESOLVER.md mentions it). Other "every skill" loops are empty.
+Expected: PASS for `using-claude-mind` (frontmatter + body word count + RESOLVER.md mentions it). Other "every skill" loops are empty.
 
 - [ ] **Step 3: Commit**
 
 ```bash
-git add skills/using-super-claude/
-git commit -m "feat(skills): add using-super-claude entry skill"
+git add skills/using-claude-mind/
+git commit -m "feat(skills): add using-claude-mind entry skill"
 ```
 
 ---
@@ -675,7 +675,7 @@ If the entity/concept doesn't have a brain page yet, create one with a one-line 
 ## Cost & latency contract
 
 - Runs in a subprocess — never blocks the main turn
-- Uses `claude-haiku-4-5` by default (overridable via `settings.json:super-claude.signal_detector_model`)
+- Uses `claude-haiku-4-5` by default (overridable via `settings.json:claude-mind.signal_detector_model`)
 - Skip silently if the cheap model is unavailable
 - Skip if `./brain/` doesn't exist
 
@@ -683,7 +683,7 @@ If the entity/concept doesn't have a brain page yet, create one with a one-line 
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "signal_detector_enabled": true,
     "signal_detector_model": "claude-haiku-4-5"
   }
@@ -1366,7 +1366,7 @@ git commit -m "feat(skills): add taste — ship gate"
 ---
 type: identity
 title: Agent Soul
-tags: [identity, super-claude]
+tags: [identity, claude-mind]
 ---
 
 # Agent Soul
@@ -1439,7 +1439,7 @@ tags: []
 `templates/settings.json`:
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "memory_location": "project",
     "memory_gitignored": true,
     "signal_detector_enabled": true,
@@ -1461,7 +1461,7 @@ description: Bootstrap ./brain/ in the current repo with SOUL.md, USER.md, setti
 
 # /sc init
 
-Run this once per project to enable Super Claude's memory protocol.
+Run this once per project to enable Claude Mind's memory protocol.
 
 ## What it does
 
@@ -1486,7 +1486,7 @@ mkdir -p ./brain/{people,companies,concepts,decisions,errors,references}
 cp "$CLAUDE_PLUGIN_ROOT/templates/SOUL.md" ./brain/SOUL.md
 cp "$CLAUDE_PLUGIN_ROOT/templates/USER.md" ./brain/USER.md
 touch ./brain/_journal.md ./brain/_signals.md ./brain/_errors.log
-# settings.json merge — preserve existing keys; add super-claude key only if missing
+# settings.json merge — preserve existing keys; add claude-mind key only if missing
 ```
 
 Then prompt the user to fill in `USER.md` and customize `SOUL.md`.
@@ -1733,7 +1733,7 @@ git commit -m "feat(hooks): synthesis prompt for stop.sh"
 
 ```bash
 #!/usr/bin/env bash
-# Super Claude — Stop hook
+# Claude Mind — Stop hook
 # Synthesizes the session transcript into ./brain/_journal.md
 # Fails closed: never errors the user's session.
 
@@ -1863,7 +1863,7 @@ Expected: FAIL — `pre-tool-use.sh` doesn't exist.
 
 ```bash
 #!/usr/bin/env bash
-# Super Claude — PreToolUse hook
+# Claude Mind — PreToolUse hook
 # Warns if Edit/Write happens without a recent <thinking> block. Never blocks.
 
 set -uo pipefail
@@ -1882,7 +1882,7 @@ TOOL="${CLAUDE_TOOL_NAME:-}"
 RECENT=$(tail -n 50 "$CLAUDE_TRANSCRIPT_PATH" 2>/dev/null || true)
 
 if ! grep -q "<thinking>" <<<"$RECENT"; then
-  printf 'super-claude: think-first reminder — no <thinking> block in the last 50 lines before this %s\n' "$TOOL" >&2
+  printf 'claude-mind: think-first reminder — no <thinking> block in the last 50 lines before this %s\n' "$TOOL" >&2
 fi
 
 exit 0
@@ -1987,7 +1987,7 @@ Expected: FAIL — `user-prompt-submit.sh` doesn't exist.
 
 ```bash
 #!/usr/bin/env bash
-# Super Claude — UserPromptSubmit hook
+# Claude Mind — UserPromptSubmit hook
 # Spawns signal-detector subprocess; returns immediately. Never blocks.
 
 set -uo pipefail
@@ -2046,9 +2046,9 @@ git commit -m "feat(hooks): user-prompt-submit.sh + signal-detector prompt"
 - [ ] **Step 1: Write the long-form philosophy doc**
 
 ```markdown
-# Super Claude — Philosophy
+# Claude Mind — Philosophy
 
-Super Claude is the synthesis of five practitioners' engineering philosophies, encoded as one Claude Code plugin. This document explains what each contributes and why each is necessary.
+Claude Mind is the synthesis of five practitioners' engineering philosophies, encoded as one Claude Code plugin. This document explains what each contributes and why each is necessary.
 
 ## Andrej Karpathy — *philosophy of the code*
 
@@ -2056,7 +2056,7 @@ Super Claude is the synthesis of five practitioners' engineering philosophies, e
 
 Karpathy's body of work — from his neural network tutorials to his commentary on software engineering — is consistently about *less*. Less code, fewer abstractions, fewer dependencies. The standard library does most of what people reach for packages for. The "smallest version that works" is almost always smaller than the version someone would naturally write.
 
-In Super Claude, this shows up in: `minimalism`, `surgical-editing`, `uv-python`, `bun-javascript`, `taste`.
+In Claude Mind, this shows up in: `minimalism`, `surgical-editing`, `uv-python`, `bun-javascript`, `taste`.
 
 **Read more:** [karpathy.ai](https://karpathy.ai), his GitHub, his "minGPT" / "nanoGPT" repos.
 
@@ -2064,25 +2064,25 @@ In Super Claude, this shows up in: `minimalism`, `surgical-editing`, `uv-python`
 
 > "[Skill files are code.](https://github.com/forrestchang)"
 
-Chang's `andrej-karpathy-skills` repo demonstrated something structurally important: a thinker's engineering philosophy can be packaged as executable skill files that an agent reads and follows. The skill IS the code. This is the format that Super Claude adopts.
+Chang's `andrej-karpathy-skills` repo demonstrated something structurally important: a thinker's engineering philosophy can be packaged as executable skill files that an agent reads and follows. The skill IS the code. This is the format that Claude Mind adopts.
 
-In Super Claude, this shows up in: every `SKILL.md` file. The format is the contribution.
+In Claude Mind, this shows up in: every `SKILL.md` file. The format is the contribution.
 
 **Read more:** [github.com/forrestchang](https://github.com/forrestchang).
 
 ## Boris Cherny — *infrastructure of the harness*
 
-Boris built Claude Code. The hook system, the slash command system, the skill discovery system, the memory primitives — all of it. Super Claude is just a particular composition of the primitives Cherny built.
+Boris built Claude Code. The hook system, the slash command system, the skill discovery system, the memory primitives — all of it. Claude Mind is just a particular composition of the primitives Cherny built.
 
-In Super Claude, this shows up in: every hook, every command, the `plugin.json` manifest itself.
+In Claude Mind, this shows up in: every hook, every command, the `plugin.json` manifest itself.
 
 ## IndyDevDan — *loop of the session*
 
 > "Context is king. The agent that remembers wins."
 
-Dan's content focuses on context engineering and agentic loops — keeping the agent's state coherent across turns and sessions. Super Claude's `signal-detector` (always-on capture) and `Stop` hook (session-end synthesis) implement this loop.
+Dan's content focuses on context engineering and agentic loops — keeping the agent's state coherent across turns and sessions. Claude Mind's `signal-detector` (always-on capture) and `Stop` hook (session-end synthesis) implement this loop.
 
-In Super Claude, this shows up in: `signal-detector`, `UserPromptSubmit` hook, `Stop` hook.
+In Claude Mind, this shows up in: `signal-detector`, `UserPromptSubmit` hook, `Stop` hook.
 
 **Read more:** [youtube.com/@indydevdan](https://www.youtube.com/@indydevdan).
 
@@ -2090,11 +2090,11 @@ In Super Claude, this shows up in: `signal-detector`, `UserPromptSubmit` hook, `
 
 > "Build something people want."
 
-Garry's `gbrain` is a production-grade agent brain — Postgres, vector search, 25 skills, signal detection, brain-first lookup, compiled-truth + timeline pages. Super Claude is much smaller in scope, but adopts gbrain's most portable patterns: brain-first lookup, the compiled-truth + timeline page format, the `taste` ship gate.
+Garry's `gbrain` is a production-grade agent brain — Postgres, vector search, 25 skills, signal detection, brain-first lookup, compiled-truth + timeline pages. Claude Mind is much smaller in scope, but adopts gbrain's most portable patterns: brain-first lookup, the compiled-truth + timeline page format, the `taste` ship gate.
 
-If you want the full version, install [`gbrain`](https://github.com/garrytan/gbrain) — Super Claude will bridge to it automatically.
+If you want the full version, install [`gbrain`](https://github.com/garrytan/gbrain) — Claude Mind will bridge to it automatically.
 
-In Super Claude, this shows up in: `brain-first`, `memory-protocol`, `taste`.
+In Claude Mind, this shows up in: `brain-first`, `memory-protocol`, `taste`.
 
 **Read more:** [github.com/garrytan/gbrain](https://github.com/garrytan/gbrain), [garrytan.com](https://garrytan.com).
 
@@ -2110,7 +2110,7 @@ In Super Claude, this shows up in: `brain-first`, `memory-protocol`, `taste`.
 
 Each layer is necessary; none alone is sufficient. Karpathy's philosophy with no infrastructure is a Twitter thread. Cherny's infrastructure with no philosophy is a tool, not an opinion. Tan's brain without taste is a database.
 
-Super Claude is the stack.
+Claude Mind is the stack.
 ```
 
 - [ ] **Step 2: Commit**
@@ -2132,7 +2132,7 @@ git commit -m "docs: PHILOSOPHY.md — five-thinker synthesis"
 ```markdown
 # Brain Page Format
 
-Every Super Claude brain page follows the **compiled-truth + timeline** pattern, borrowed from [`garrytan/gbrain`](https://github.com/garrytan/gbrain).
+Every Claude Mind brain page follows the **compiled-truth + timeline** pattern, borrowed from [`garrytan/gbrain`](https://github.com/garrytan/gbrain).
 
 ## Structure
 
@@ -2230,7 +2230,7 @@ git commit -m "docs: brain-page format spec"
 ```markdown
 # gbrain Bridge
 
-Super Claude can delegate brain operations to [`garrytan/gbrain`](https://github.com/garrytan/gbrain) when it's installed. The two are complementary: Super Claude provides the persona/loop/taste; gbrain provides the production-grade brain.
+Claude Mind can delegate brain operations to [`garrytan/gbrain`](https://github.com/garrytan/gbrain) when it's installed. The two are complementary: Claude Mind provides the persona/loop/taste; gbrain provides the production-grade brain.
 
 ## Enabling the bridge
 
@@ -2238,7 +2238,7 @@ In your repo's `settings.json` (or via `/sc init` if gbrain was detected):
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "gbrain_bridge_enabled": true
   }
 }
@@ -2246,7 +2246,7 @@ In your repo's `settings.json` (or via `/sc init` if gbrain was detected):
 
 The bridge requires:
 - `gbrain` MCP server registered with Claude Code
-- Super Claude v0.1+
+- Claude Mind v0.1+
 
 ## What changes when the bridge is on
 
@@ -2267,7 +2267,7 @@ The markdown brain pages remain the source of truth. gbrain reads them.
 
 ## Known limitations
 
-- The bridge is one-way: Super Claude → gbrain. We don't ingest gbrain's voice/email/calendar streams.
+- The bridge is one-way: Claude Mind → gbrain. We don't ingest gbrain's voice/email/calendar streams.
 - `/sc init` does not install gbrain; you have to do that separately.
 - Tested against gbrain commits up through 2026-04-15. Newer gbrain may require bridge updates.
 ```
@@ -2493,7 +2493,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: Super Claude version
+      label: Claude Mind version
     validations:
       required: true
 ```
@@ -2545,7 +2545,7 @@ git commit -m "chore: issue templates"
 - [ ] **Step 1: Replace skeleton with real README**
 
 ```markdown
-# Super Claude
+# Claude Mind
 
 > The opinionated senior-engineer brain for Claude Code.
 
@@ -2565,10 +2565,10 @@ See [PHILOSOPHY.md](./PHILOSOPHY.md) for the long version.
 
 ```bash
 # From the marketplace (once published):
-claude plugins install <user>/super-claude
+claude plugins install <user>/claude-mind
 
 # Or from source:
-git clone https://github.com/<user>/super-claude.git ~/.claude/plugins/super-claude
+git clone https://github.com/<user>/claude-mind.git ~/.claude/plugins/claude-mind
 ```
 
 ## Quickstart
@@ -2584,7 +2584,7 @@ In any project repo:
 
 ## What's inside
 
-**10 skills.** [`signal-detector`](./skills/signal-detector/SKILL.md), [`brain-first`](./skills/brain-first/SKILL.md), [`think-first`](./skills/think-first/SKILL.md), [`minimalism`](./skills/minimalism/SKILL.md), [`surgical-editing`](./skills/surgical-editing/SKILL.md), [`memory-protocol`](./skills/memory-protocol/SKILL.md), [`uv-python`](./skills/uv-python/SKILL.md), [`bun-javascript`](./skills/bun-javascript/SKILL.md), [`taste`](./skills/taste/SKILL.md), [`using-super-claude`](./skills/using-super-claude/SKILL.md).
+**10 skills.** [`signal-detector`](./skills/signal-detector/SKILL.md), [`brain-first`](./skills/brain-first/SKILL.md), [`think-first`](./skills/think-first/SKILL.md), [`minimalism`](./skills/minimalism/SKILL.md), [`surgical-editing`](./skills/surgical-editing/SKILL.md), [`memory-protocol`](./skills/memory-protocol/SKILL.md), [`uv-python`](./skills/uv-python/SKILL.md), [`bun-javascript`](./skills/bun-javascript/SKILL.md), [`taste`](./skills/taste/SKILL.md), [`using-claude-mind`](./skills/using-claude-mind/SKILL.md).
 
 **3 hooks.** UserPromptSubmit (signal capture), PreToolUse (think-first reminder), Stop (session synthesis).
 
@@ -2598,7 +2598,7 @@ In any project repo:
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "memory_location": "project",
     "memory_gitignored": true,
     "signal_detector_enabled": true,
@@ -2611,7 +2611,7 @@ In any project repo:
 
 ## With gbrain
 
-If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, set `gbrain_bridge_enabled: true` and Super Claude will delegate brain ops for hybrid (vector + keyword) retrieval. See [docs/integrations/gbrain-bridge.md](./docs/integrations/gbrain-bridge.md).
+If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, set `gbrain_bridge_enabled: true` and Claude Mind will delegate brain ops for hybrid (vector + keyword) retrieval. See [docs/integrations/gbrain-bridge.md](./docs/integrations/gbrain-bridge.md).
 
 ## Compatibility
 
@@ -2647,13 +2647,13 @@ git commit -m "docs: final README"
 ```markdown
 # Contributing
 
-Thanks for your interest. Super Claude is opinionated — read the [PHILOSOPHY.md](./PHILOSOPHY.md) before proposing changes.
+Thanks for your interest. Claude Mind is opinionated — read the [PHILOSOPHY.md](./PHILOSOPHY.md) before proposing changes.
 
 ## Local setup
 
 ```bash
-git clone https://github.com/<user>/super-claude.git
-cd super-claude
+git clone https://github.com/<user>/claude-mind.git
+cd claude-mind
 bun install
 bun test
 ```
@@ -2698,13 +2698,13 @@ PRs are reviewed against the [`taste`](./skills/taste/SKILL.md) skill — *"is t
 ```markdown
 # Changelog
 
-All notable changes to Super Claude. Hand-written; written for users, not machines.
+All notable changes to Claude Mind. Hand-written; written for users, not machines.
 
 ## v0.1.0 — 2026-04-15
 
 Initial release.
 
-- 10 skills: signal-detector, brain-first, think-first, minimalism, surgical-editing, memory-protocol, uv-python, bun-javascript, taste, using-super-claude
+- 10 skills: signal-detector, brain-first, think-first, minimalism, surgical-editing, memory-protocol, uv-python, bun-javascript, taste, using-claude-mind
 - 3 hooks: UserPromptSubmit, PreToolUse, Stop
 - 4 commands: /sc init, /remember, /recall, /ship
 - Compiled-truth + timeline brain page format
@@ -2723,12 +2723,12 @@ git commit -m "docs: CONTRIBUTING and CHANGELOG"
 
 ### Task 12.3: Naming decision
 
-This is a **decision task**, not an implementation task. Per spec §1.2, the working name `super-claude` collides with `NomenAK/SuperClaude_Framework`.
+This is a **decision task**, not an implementation task. Per spec §1.2, the working name `claude-mind` collides with `NomenAK/SuperClaude_Framework`.
 
 - [ ] **Step 1: Confirm the final name with the user**
 
 Options to present:
-- Keep `super-claude` (accept collision)
+- Keep `claude-mind` (accept collision)
 - Rename to one of: `claude-mind`, `synthesis`, `pentad`, `atelier`, `claw`, `minima`, or a user-suggested name
 
 Once decided:
@@ -2738,8 +2738,8 @@ Once decided:
 ```bash
 # Replace in all files
 NEW="claude-mind"  # or whatever was chosen
-git grep -l "super-claude" | xargs sed -i.bak "s/super-claude/$NEW/g"
-git grep -l "Super Claude" | xargs sed -i.bak "s/Super Claude/$(echo $NEW | sed 's/-/ /g' | python3 -c 'import sys; print(sys.stdin.read().title())')/g"
+git grep -l "claude-mind" | xargs sed -i.bak "s/claude-mind/$NEW/g"
+git grep -l "Claude Mind" | xargs sed -i.bak "s/Claude Mind/$(echo $NEW | sed 's/-/ /g' | python3 -c 'import sys; print(sys.stdin.read().title())')/g"
 find . -name "*.bak" -delete
 mv "$(pwd)" "$(dirname "$(pwd)")/$NEW"
 ```
@@ -2765,10 +2765,10 @@ git commit -m "chore: rename to $NEW (resolves spec §1.2)"
 - [ ] **Step 1: Install in your own `~/.claude/plugins/`**
 
 ```bash
-ln -s "$(pwd)" ~/.claude/plugins/super-claude
+ln -s "$(pwd)" ~/.claude/plugins/claude-mind
 ```
 
-- [ ] **Step 2: Run `/sc init` in a real project and use Super Claude for one full session**
+- [ ] **Step 2: Run `/sc init` in a real project and use Claude Mind for one full session**
 
 Validate the success criteria from spec §10:
 1. `./brain/` populated with real entries

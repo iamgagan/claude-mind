@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Super Claude — UserPromptSubmit hook
+# Claude Mind — UserPromptSubmit hook
 # Spawns signal-detector subprocess; returns immediately. Never blocks.
 
 set -uo pipefail

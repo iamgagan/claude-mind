@@ -5,7 +5,7 @@ description: Bootstrap ./brain/ in the current repo with SOUL.md, USER.md, setti
 
 # /sc-init
 
-Run this once per project to enable Super Claude's memory protocol.
+Run this once per project to enable Claude Mind's memory protocol.
 
 ## What it does
 
@@ -30,7 +30,7 @@ mkdir -p ./brain/{people,companies,concepts,decisions,errors,references}
 cp "$CLAUDE_PLUGIN_ROOT/templates/SOUL.md" ./brain/SOUL.md
 cp "$CLAUDE_PLUGIN_ROOT/templates/USER.md" ./brain/USER.md
 touch ./brain/_journal.md ./brain/_signals.md ./brain/_errors.log
-# settings.json merge — preserve existing keys; add super-claude key only if missing
+# settings.json merge — preserve existing keys; add claude-mind key only if missing
 ```
 
 Then prompt the user to fill in `USER.md` and customize `SOUL.md`.

@@ -37,7 +37,7 @@ If the entity/concept doesn't have a brain page yet, create one with a one-line 
 ## Cost & latency contract
 
 - Runs in a subprocess — never blocks the main turn
-- Uses `claude-haiku-4-5` by default (overridable via `settings.json:super-claude.signal_detector_model`)
+- Uses `claude-haiku-4-5` by default (overridable via `settings.json:claude-mind.signal_detector_model`)
 - Skip silently if the cheap model is unavailable
 - Skip if `./brain/` doesn't exist
 
@@ -45,7 +45,7 @@ If the entity/concept doesn't have a brain page yet, create one with a one-line 
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "signal_detector_enabled": true,
     "signal_detector_model": "claude-haiku-4-5"
   }

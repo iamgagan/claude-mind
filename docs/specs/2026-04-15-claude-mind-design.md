@@ -1,8 +1,8 @@
-# Super Claude — Design Spec
+# Claude Mind — Design Spec
 
 **Status:** Draft (v0.1)
 **Date:** 2026-04-15
-**Working name:** `super-claude` (see [Naming](#12-naming--open-risk) — collision with `NomenAK/SuperClaude_Framework`)
+**Working name:** `claude-mind` (see [Naming](#12-naming--open-risk) — collision with `NomenAK/SuperClaude_Framework`)
 **Intended form factor:** Claude Code plugin, published to the marketplace
 
 ---
@@ -30,12 +30,12 @@ Dan's loop, Tan's brain and taste — one plugin, ten skills.*
 
 ### 1.2 Naming — open risk
 
-Working name `super-claude` collides with
+Working name `claude-mind` collides with
 [`NomenAK/SuperClaude_Framework`](https://github.com/NomenAK/SuperClaude_Framework)
 (popular existing project, different philosophy). **Rename decision deferred to
 pre-publish.** Candidates under consideration:
 
-- `super-claude` (keep; accept collision, rely on namespace)
+- `claude-mind` (keep; accept collision, rely on namespace)
 - `claude-mind`, `synthesis`, `pentad`, `atelier` (synthesis-framed)
 - `claw` (adjacent to Garry's `OpenClaw` namespace — potential or problem)
 - `minima` (earlier working name — likely too small-sounding for this scope)
@@ -94,7 +94,7 @@ User prompt
 ### 2.2 Plugin layout (on-disk)
 
 ```
-super-claude/                         # the published plugin repo
+claude-mind/                         # the published plugin repo
 ├── plugin.json                       # Claude Code plugin manifest
 ├── README.md                         # the pitch, install, quickstart
 ├── LICENSE                           # MIT
@@ -107,7 +107,7 @@ super-claude/                         # the published plugin repo
 │       └── gbrain-bridge.md          # optional gbrain integration
 ├── skills/
 │   ├── RESOLVER.md                   # routes user intent → skill
-│   ├── using-super-claude/SKILL.md   # entry skill
+│   ├── using-claude-mind/SKILL.md   # entry skill
 │   ├── signal-detector/SKILL.md
 │   ├── brain-first/SKILL.md
 │   ├── think-first/SKILL.md
@@ -141,7 +141,7 @@ super-claude/                         # the published plugin repo
     └── fixtures/
 ```
 
-Counts: **10 skills** (including `using-super-claude` entry skill), **3 hooks**, **4 commands**, **1 resolver**, **1 brain-format spec**.
+Counts: **10 skills** (including `using-claude-mind` entry skill), **3 hooks**, **4 commands**, **1 resolver**, **1 brain-format spec**.
 
 ---
 
@@ -153,7 +153,7 @@ Each skill is a **fat markdown file** with YAML frontmatter (`name`, `descriptio
 
 | Skill | Category | Thinker | Purpose |
 |---|---|---|---|
-| `using-super-claude` | Entry | All | Discovery skill — explains the five pillars and how the skills fit together |
+| `using-claude-mind` | Entry | All | Discovery skill — explains the five pillars and how the skills fit together |
 | `signal-detector` | Always-on | Tan + Dan | Fires on every prompt. Captures original thinking + entities into brain asynchronously |
 | `brain-first` | Always-on | Tan | Before any external lookup or new file, check the brain. Five-step protocol |
 | `think-first` | Craft | Karpathy | Required `<thinking>` block before any Edit/Write. Enforced by PreToolUse hook |
@@ -254,12 +254,12 @@ We just detect it and hand off.
 
 ### 3.7 Memory location config
 
-Per user's global CLAUDE.md, memory can live in several places. Super Claude
+Per user's global CLAUDE.md, memory can live in several places. Claude Mind
 respects a `memory_location` setting:
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "memory_location": "project",
     "memory_gitignored": true,
     "gbrain_bridge_enabled": false
@@ -376,7 +376,7 @@ valid, hooks executable, RESOLVER.md covers all skills), not **intelligence**.
 
 ### 7.1 Marketplace
 
-Published to the Claude Code plugin marketplace as `<user>/super-claude`.
+Published to the Claude Code plugin marketplace as `<user>/claude-mind`.
 
 Marketplace manifest (`plugin.json`) declares skills/hooks/commands, a short
 description, and the PHILOSOPHY.md URL as the long-form pitch.
@@ -419,7 +419,7 @@ MIT.
 
 ## 10. Success criteria
 
-A user who installs Super Claude and runs `/sc init` in a fresh repo, then does
+A user who installs Claude Mind and runs `/sc init` in a fresh repo, then does
 30 minutes of normal Claude Code work, should see:
 
 1. A `./brain/` directory populated with real, useful compiled-truth entries

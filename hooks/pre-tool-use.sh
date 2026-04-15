@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Super Claude — PreToolUse hook
+# Claude Mind — PreToolUse hook
 # Warns if Edit/Write happens without a recent <thinking> block. Never blocks.
 
 set -uo pipefail
@@ -18,7 +18,7 @@ TOOL="${CLAUDE_TOOL_NAME:-}"
 RECENT=$(tail -n 50 "$CLAUDE_TRANSCRIPT_PATH" 2>/dev/null || true)
 
 if ! grep -q "<thinking>" <<<"$RECENT"; then
-  printf 'super-claude: think-first reminder — no <thinking> block in the last 50 lines before this %s\n' "$TOOL" >&2
+  printf 'claude-mind: think-first reminder — no <thinking> block in the last 50 lines before this %s\n' "$TOOL" >&2
 fi
 
 exit 0

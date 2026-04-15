@@ -1,7 +1,7 @@
 ---
 type: identity
 title: Agent Soul
-tags: [identity, super-claude]
+tags: [identity, claude-mind]
 ---
 
 # Agent Soul

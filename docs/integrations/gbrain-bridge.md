@@ -1,6 +1,6 @@
 # gbrain Bridge
 
-Super Claude can delegate brain operations to [`garrytan/gbrain`](https://github.com/garrytan/gbrain) when it's installed. The two are complementary: Super Claude provides the persona/loop/taste; gbrain provides the production-grade brain.
+Claude Mind can delegate brain operations to [`garrytan/gbrain`](https://github.com/garrytan/gbrain) when it's installed. The two are complementary: Claude Mind provides the persona/loop/taste; gbrain provides the production-grade brain.
 
 ## Enabling the bridge
 
@@ -8,7 +8,7 @@ In your repo's `settings.json` (or via `/sc-init` if gbrain was detected):
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "gbrain_bridge_enabled": true
   }
 }
@@ -16,7 +16,7 @@ In your repo's `settings.json` (or via `/sc-init` if gbrain was detected):
 
 The bridge requires:
 - `gbrain` MCP server registered with Claude Code
-- Super Claude v0.1+
+- Claude Mind v0.1+
 
 ## What changes when the bridge is on
 
@@ -37,6 +37,6 @@ The markdown brain pages remain the source of truth. gbrain reads them.
 
 ## Known limitations
 
-- The bridge is one-way: Super Claude → gbrain. We don't ingest gbrain's voice/email/calendar streams.
+- The bridge is one-way: Claude Mind → gbrain. We don't ingest gbrain's voice/email/calendar streams.
 - `/sc-init` does not install gbrain; you have to do that separately.
 - Tested against gbrain commits up through 2026-04-15. Newer gbrain may require bridge updates.

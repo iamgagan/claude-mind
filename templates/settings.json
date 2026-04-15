@@ -1,5 +1,5 @@
 {
-  "super-claude": {
+  "claude-mind": {
     "memory_location": "project",
     "memory_gitignored": true,
     "signal_detector_enabled": true,

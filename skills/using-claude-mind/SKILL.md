@@ -1,12 +1,12 @@
 ---
-name: using-super-claude
-description: Read this once per session — the five-thinker mental model and how all Super Claude skills fit together
-when-to-use: At the start of any session where Super Claude is installed; when a user asks how the plugin's pieces fit together
+name: using-claude-mind
+description: Read this once per session — the five-thinker mental model and how all Claude Mind skills fit together
+when-to-use: At the start of any session where Claude Mind is installed; when a user asks how the plugin's pieces fit together
 ---
 
-# Using Super Claude
+# Using Claude Mind
 
-Super Claude is the synthesis of five practitioners' engineering philosophies, encoded as 10 skills, 3 hooks, and 4 commands. Read this once per session to understand how the pieces fit.
+Claude Mind is the synthesis of five practitioners' engineering philosophies, encoded as 10 skills, 3 hooks, and 4 commands. Read this once per session to understand how the pieces fit.
 
 ## The five contributors
 
@@ -32,9 +32,9 @@ Super Claude is the synthesis of five practitioners' engineering philosophies, e
 
 User prompt → UserPromptSubmit hook fires `signal-detector` (async) → agent reads `RESOLVER.md` → agent invokes the relevant skill(s) → PreToolUse hook checks for `<thinking>` before edits → Stop hook synthesizes session into brain at end.
 
-## When NOT to use Super Claude
+## When NOT to use Claude Mind
 
-Super Claude's opinions are strong. They're wrong for:
+Claude Mind's opinions are strong. They're wrong for:
 - One-line typo fixes (overhead exceeds value)
 - Greenfield prototypes where speed > taste
 - Codebases that have a different established philosophy you're contributing to
@@ -54,7 +54,7 @@ In those cases, disable via `settings.json` or use Claude Code without the plugi
 | `uv-python` | Python toolchain |
 | `bun-javascript` | JS/TS toolchain |
 | `taste` | Ship gate |
-| `using-super-claude` | This file |
+| `using-claude-mind` | This file |
 
 ## Commands
 

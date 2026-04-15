@@ -1,10 +1,10 @@
 {
-  "name": "super-claude",
+  "name": "claude-mind",
   "version": "0.1.0",
   "description": "The opinionated senior-engineer brain for Claude Code. Karpathy + Chang + Cherny + IndyDevDan + Tan, synthesized.",
-  "author": "<your-handle>",
+  "author": "iamgagan",
   "license": "MIT",
-  "homepage": "https://github.com/<your-handle>/super-claude",
+  "homepage": "https://github.com/iamgagan/claude-mind",
   "skills": "./skills",
   "commands": "./commands",
   "hooks": {

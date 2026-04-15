@@ -1,6 +1,6 @@
 # Brain Page Format
 
-Every Super Claude brain page follows the **compiled-truth + timeline** pattern, borrowed from [`garrytan/gbrain`](https://github.com/garrytan/gbrain).
+Every Claude Mind brain page follows the **compiled-truth + timeline** pattern, borrowed from [`garrytan/gbrain`](https://github.com/garrytan/gbrain).
 
 ## Structure
 

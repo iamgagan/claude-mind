@@ -1,4 +1,4 @@
-# Super Claude — Skill Resolver
+# Claude Mind — Skill Resolver
 
 This file routes user intent to the right skill. Read this first on any non-trivial task.
 
@@ -28,4 +28,4 @@ This file routes user intent to the right skill. Read this first on any non-triv
 
 ## Discovery
 
-- `using-super-claude` — read this once per session for the full mental model.
+- `using-claude-mind` — read this once per session for the full mental model.

@@ -1,12 +1,12 @@
 # Contributing
 
-Thanks for your interest. Super Claude is opinionated — read the [PHILOSOPHY.md](./PHILOSOPHY.md) before proposing changes.
+Thanks for your interest. Claude Mind is opinionated — read the [PHILOSOPHY.md](./PHILOSOPHY.md) before proposing changes.
 
 ## Local setup
 
 ```bash
-git clone https://github.com/<user>/super-claude.git
-cd super-claude
+git clone https://github.com/<user>/claude-mind.git
+cd claude-mind
 bun install
 bun test
 ```

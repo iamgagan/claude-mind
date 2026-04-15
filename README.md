@@ -1,4 +1,4 @@
-# Super Claude
+# Claude Mind
 
 > The opinionated senior-engineer brain for Claude Code.
 
@@ -18,10 +18,10 @@ See [PHILOSOPHY.md](./PHILOSOPHY.md) for the long version.
 
 ```bash
 # From the marketplace (once published):
-claude plugins install <user>/super-claude
+claude plugins install <user>/claude-mind
 
 # Or from source:
-git clone https://github.com/<user>/super-claude.git ~/.claude/plugins/super-claude
+git clone https://github.com/<user>/claude-mind.git ~/.claude/plugins/claude-mind
 ```
 
 ## Quickstart
@@ -37,7 +37,7 @@ In any project repo:
 
 ## What's inside
 
-**10 skills.** [`signal-detector`](./skills/signal-detector/SKILL.md), [`brain-first`](./skills/brain-first/SKILL.md), [`think-first`](./skills/think-first/SKILL.md), [`minimalism`](./skills/minimalism/SKILL.md), [`surgical-editing`](./skills/surgical-editing/SKILL.md), [`memory-protocol`](./skills/memory-protocol/SKILL.md), [`uv-python`](./skills/uv-python/SKILL.md), [`bun-javascript`](./skills/bun-javascript/SKILL.md), [`taste`](./skills/taste/SKILL.md), [`using-super-claude`](./skills/using-super-claude/SKILL.md).
+**10 skills.** [`signal-detector`](./skills/signal-detector/SKILL.md), [`brain-first`](./skills/brain-first/SKILL.md), [`think-first`](./skills/think-first/SKILL.md), [`minimalism`](./skills/minimalism/SKILL.md), [`surgical-editing`](./skills/surgical-editing/SKILL.md), [`memory-protocol`](./skills/memory-protocol/SKILL.md), [`uv-python`](./skills/uv-python/SKILL.md), [`bun-javascript`](./skills/bun-javascript/SKILL.md), [`taste`](./skills/taste/SKILL.md), [`using-claude-mind`](./skills/using-claude-mind/SKILL.md).
 
 **3 hooks.** UserPromptSubmit (signal capture), PreToolUse (think-first reminder), Stop (session synthesis).
 
@@ -51,7 +51,7 @@ In any project repo:
 
 ```json
 {
-  "super-claude": {
+  "claude-mind": {
     "memory_location": "project",
     "memory_gitignored": true,
     "signal_detector_enabled": true,
@@ -64,7 +64,7 @@ In any project repo:
 
 ## With gbrain
 
-If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, set `gbrain_bridge_enabled: true` and Super Claude will delegate brain ops for hybrid (vector + keyword) retrieval. See [docs/integrations/gbrain-bridge.md](./docs/integrations/gbrain-bridge.md).
+If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, set `gbrain_bridge_enabled: true` and Claude Mind will delegate brain ops for hybrid (vector + keyword) retrieval. See [docs/integrations/gbrain-bridge.md](./docs/integrations/gbrain-bridge.md).
 
 ## Compatibility
 
