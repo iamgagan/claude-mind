@@ -1,0 +1,15 @@
+{
+  "name": "super-claude",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "test": "bun test",
+    "lint": "bun run lint:skills && bun run lint:hooks",
+    "lint:skills": "bun test test/skills.test.ts",
+    "lint:hooks": "bun test test/hooks.test.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "gray-matter": "^4.0.3"
+  }
+}

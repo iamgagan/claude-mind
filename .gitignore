@@ -9,3 +9,4 @@ brain/_errors.log
 test/.tmp/
 dist/
 .bun/
+*.tsbuildinfo
