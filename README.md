@@ -73,11 +73,21 @@ If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, s
 
 ## Benchmarks
 
-**v0 benchmark (3 tasks × 3 iterations) showed no measurable difference** vs baseline Claude Code. Confirmed cause: `claude -p` non-interactive mode (the only available headless harness) does not fire hooks, so the plugin's core mechanisms — signal capture, session synthesis, think-first reminders — never run. Skills load but small one-shot prompts don't trigger them.
+**v0.1.1 results** (n=3 per task × mode, 18 total runs):
 
-In other words: **the value of claude-mind, if any, is delivered through hooks in interactive Claude Code sessions** — and we don't yet have a reliable way to benchmark that. See [benchmark/README.md](./benchmark/README.md) for raw numbers and the open problem.
+| Task | Baseline | Plugin | Δ |
+|---|---|---|---|
+| 01-fizzbuzz | 27.8±1.4s | 16.6±2.1s | **-40%** |
+| 02-bug-fix-surgical | 17.8±2.2s | 14.7±0.7s | **-18%** |
+| 03-refactor-restraint | 25.6±3.1s | 26.9±8.8s | +5% (noise) |
 
-If you have ideas for how to benchmark a hook-dependent plugin headlessly, please open an issue.
+100% pass rate in both modes. **Diff sizes byte-identical across modes** — meaning the "smaller diffs" claim is not yet supported.
+
+**Provisional reading:** plugin appears faster on small tasks (likely real on simpler tasks; could be cache warmth or variance — n=3 too small to claim definitively). No measurable code-quality delta yet.
+
+**Honest caveats:** 2 of 3 hooks are currently broken (Stop and PreToolUse — stdin parsing bug, fix in v0.1.2). The plugin v0.1.0 had ALL hooks broken due to a packaging bug. v0.1.1 fixed the packaging and the UserPromptSubmit hook now fires.
+
+See [BENCHMARK.md](./BENCHMARK.md) for full methodology, caveats, and roadmap.
 
 ## Contributing
 

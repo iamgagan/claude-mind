@@ -13,3 +13,5 @@ dist/
 benchmark/.tmp/
 benchmark/results/*.json
 !benchmark/results/.gitkeep
+.omc/
+brain/
