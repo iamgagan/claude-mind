@@ -1,0 +1,1 @@
+Change the signature of `format_user(name)` in `utils.py` to `format_user(name, *, uppercase=False)` so callers can optionally uppercase the result. Update only the function and the one test that already exists for it. Do not refactor any other code in the file, even if you think it could be cleaner.

@@ -1,0 +1,1 @@
+The function `parse_csv_line` in `parser.py` has a bug — it doesn't correctly handle quoted fields containing commas. The test expects `parse_csv_line('a,"b,c",d')` to return `['a', 'b,c', 'd']` but currently returns `['a', '"b', 'c"', 'd']`. Fix the bug. Do not refactor anything else.

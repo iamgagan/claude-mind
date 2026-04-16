@@ -1,0 +1,1 @@
+Write a Python function `fizzbuzz(n)` that returns a list of strings for numbers 1 to n inclusive. For multiples of 3, use "Fizz". For multiples of 5, use "Buzz". For multiples of both, use "FizzBuzz". Otherwise, the number as a string. Solution goes in `solution.py`.
