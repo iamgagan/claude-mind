@@ -1,22 +1,24 @@
 # Claude Mind — Benchmark Results
 
 **Last updated:** 2026-04-16
-**Plugin version under test:** v0.1.1
+**Plugin version under test:** v0.1.2 (all 3 hooks firing)
 **Sample size:** 3 iterations per (task × mode), 3 tasks, 2 modes — **18 total runs**
 
-> ⚠️ **n=3 is not statistically significant.** These numbers should be read as
-> a sanity check on the plugin's wiring after the v0.1.1 hook fix, not as
-> definitive performance claims. A v1 benchmark with n≥10 is on the roadmap.
+> ⚠️ **n=3 is not statistically significant.** These numbers are directional,
+> not definitive. Standard deviations often exceed mean differences.
+> A v1 benchmark with n≥10 is on the roadmap.
 
 ---
 
-## Headline numbers
+## Headline numbers (v0.1.2)
 
-| Task | Baseline duration | Plugin duration | Δ | Both diffs |
-|---|---|---|---|---|
-| **01-fizzbuzz** (sanity) | 27.8 ± 1.4s | 16.6 ± 2.1s | **-40.2%** ⚡ | 16 lines (identical) |
-| **02-bug-fix-surgical** | 17.8 ± 2.2s | 14.7 ± 0.7s | **-17.6%** ⚡ | 17 lines (identical) |
-| **03-refactor-restraint** | 25.6 ± 3.1s | 26.9 ± 8.8s | +5.1% | 8 lines (identical) |
+| Task | Baseline dur | Plugin dur | Δ dur | Baseline diff | Plugin diff | Δ diff |
+|---|---|---|---|---|---|---|
+| **01-fizzbuzz** (sanity) | 19.3 ± 4.1s | 13.9 ± 3.0s | **-28%** ⚡ | 16 | 16 | 0 |
+| **02-bug-fix-surgical** | 13.3 ± 4.6s | 16.9 ± 6.7s | **+27%** 🐢 | 17 | 20 ± 5.2 | **+3** |
+| **03-refactor-restraint** | 16.4 ± 0.8s | 24.1 ± 3.1s | **+47%** 🐢 | 9 ± 1.7 | 8 | -1 |
+
+**Aggregate:** baseline 16.4 ± 4.1s / 14.0 diff, plugin 18.3 ± 6.0s / 14.7 diff.
 
 Pass rate: **100% in both modes on all 3 tasks** (18/18).
 
@@ -25,58 +27,54 @@ Pass rate: **100% in both modes on all 3 tasks** (18/18).
 ## What this actually tells us
 
 ### 1. The plugin doesn't break anything ✅
-All 18 runs passed. No crashes, no broken tests, no regressions in solution quality. Adding claude-mind to your Claude Code setup is safe.
+All 18 runs passed. No crashes, no broken tests, no regressions in solution correctness.
 
-### 2. There's a measurable speedup on simple tasks
-Tasks 01 and 02 are **17–40% faster** with the plugin enabled. This is surprising — we expected the plugin to *add* overhead from skill loading, not remove it.
+### 2. Plugin is faster on trivial tasks, slower on non-trivial ones
+- **Fizzbuzz (-28%):** Plugin still shows a speedup on the simplest task. Possibly real — skill context may help the model converge faster when the task is obvious.
+- **Bug fix (+27%):** Plugin is slower. One of three plugin runs produced a 26-line diff instead of the 17-line baseline — the agent did extra work. This is the **opposite** of what `surgical-editing` promises.
+- **Refactor (+47%):** Plugin is significantly slower with essentially the same diff size. Hook overhead + skill loading may eat time when the agent doesn't benefit from the extra context.
 
-**Possible explanations:**
-- Skill prompts may give the model a clearer context window so it converges faster
-- Could be measurement artifact — cache warmth between consecutive runs
-- Could be variance — n=3 with ±1–2s standard deviations doesn't strongly reject the null
+### 3. The plugin occasionally produces larger diffs
+Task 02 plugin run 2 wrote 26 lines vs the baseline's consistent 17. This is a single outlier (n=1), but it's the first time the plugin produced *different code* from baseline — and it was more, not less.
 
-**Honest read:** "Plugin appears faster on small tasks, but n=3 is too small to claim this with confidence."
-
-### 3. Diff sizes are byte-identical across modes
-This is the **most important honest finding.** Every claim claude-mind makes about producing smaller, more surgical edits — `surgical-editing` skill, `minimalism` skill, `taste` ship gate — **shows zero observable effect on these three tasks**. Both modes wrote exactly the same code (within whitespace tolerance: 16/17/8 lines respectively).
-
-**Likely cause:** the tasks are too small to discriminate. Fixing a one-line CSV bug or adding a kwarg can't really be "more or less surgical." A benchmark that measures these claims needs bigger tasks where scope creep is possible (real GitHub issues with complex codebases).
-
-### 4. Refactor task (#03) shows no benefit and high noise
-Plugin mode duration was 26.9 ± 8.8s. That ±8.8s standard deviation means individual runs varied by tens of percent. n=3 is far too few to draw conclusions.
+### 4. The "smaller diffs" claim is still unsupported
+Across 18 runs, the plugin produced the same or slightly larger diffs than baseline. The `surgical-editing` and `minimalism` skills show no measurable effect.
 
 ---
 
-## Plugin status — known bugs
+## Version comparison
 
-| Hook | Fires under SDK? | Fires under `claude -p`? |
-|---|---|---|
-| **UserPromptSubmit** (signal-detector) | ✅ yes (verified, 24 entries written) | ✅ yes (verified, 8 hits) |
-| **Stop** (synthesis) | ❌ **broken** — known bug | ❌ **broken** — known bug |
-| **PreToolUse** (think-first) | ❌ **broken** — known bug | ❌ **broken** — known bug |
+The story changed between v0.1.1 (UserPromptSubmit only) and v0.1.2 (all hooks firing):
 
-The `Stop` and `PreToolUse` hooks read `CLAUDE_TRANSCRIPT_PATH` and `CLAUDE_TOOL_NAME` from environment variables, but Claude Code passes hook input as JSON on stdin. **Fix planned for v0.1.2.**
+| Task | v0.1.1 Δ dur | v0.1.2 Δ dur | What changed |
+|---|---|---|---|
+| 01-fizzbuzz | -40% | -28% | Still faster; gap shrank |
+| 02-bug-fix-surgical | -18% | +27% | **Flipped** — now slower |
+| 03-refactor-restraint | +5% | +47% | Was noise; now clearly slower |
 
-So the v0.1.1 benchmark is measuring a setup where:
-- Skills load and may influence the model's planning ✅
-- Slash commands are available (but unused in the benchmark prompts) ✅
-- UserPromptSubmit hook fires (writes to brain async) ✅
-- Stop hook does NOT fire ❌
-- PreToolUse hook does NOT fire ❌
+**Interpretation:** with all hooks firing (Stop synthesis, PreToolUse think-first reminder), the plugin adds overhead that outweighs any benefit on small tasks. The v0.1.1 "speedup" was partly an artifact of most hooks not firing.
 
-The speedup we're seeing, if it's real, is happening **without** the think-first reminder hook and **without** the session synthesis hook. Those would only matter on multi-turn or long sessions, neither of which the benchmark exercises.
+---
+
+## Hook status — all green
+
+| Hook | Status |
+|---|---|
+| **UserPromptSubmit** (signal-detector) | ✅ fires (since v0.1.1) |
+| **Stop** (synthesis) | ✅ fires (since v0.1.2) |
+| **PreToolUse** (think-first) | ✅ fires (since v0.1.2) |
 
 ---
 
 ## What this means for users
 
-✅ **Safe to install.** Doesn't break anything; may speed up small tasks.
+✅ **Safe to install.** 100% pass rate; no correctness regressions.
 
-⚠️ **2 of 3 hooks currently broken.** v0.1.2 will fix them. If your use case depends on think-first warnings or end-of-session synthesis, wait for v0.1.2.
+⚠️ **Expect overhead on small tasks.** The plugin adds ~2-8 seconds on one-shot prompts due to hook execution + skill context loading. This may be worthwhile if the brain-compounding and taste-gate save you time over a full session — but the one-shot benchmark can't measure that.
 
-⚠️ **Code-quality claims unsupported.** The plugin says it produces smaller diffs and more surgical edits. The benchmark currently shows neither effect. We need bigger tasks (real GitHub issues) to test these claims.
+⚠️ **Code-quality claims still unsupported.** Diff sizes are the same or slightly larger with the plugin. The `surgical-editing` and `minimalism` skills are not measurably improving output on these tasks.
 
-❓ **Speedup claim provisional.** -40% on a fizzbuzz is suspicious. We need n≥10 and ideally cold-cache runs to know if it's real.
+❓ **The real value may only show over long sessions.** Signal capture compounds. Brain-first lookup pays off when the brain has entries. The taste gate matters on real PRs, not benchmarked toy tasks. None of these are tested by this benchmark.
 
 ---
 
@@ -84,18 +82,19 @@ The speedup we're seeing, if it's real, is happening **without** the think-first
 
 ```
 Task:    01-fizzbuzz, 02-bug-fix-surgical, 03-refactor-restraint
-Mode:    baseline (plugin disabled) vs plugin (claude-mind v0.1.1 enabled)
+Mode:    baseline (plugin disabled) vs plugin (claude-mind v0.1.2 enabled)
 Runner:  ./benchmark/run.sh --mode <mode> --task <task>
 Engine:  claude -p --permission-mode acceptEdits --output-format text
-Iter:    3 per (task, mode), interleaved
+Iter:    3 per (task, mode)
 Recorded: wall-clock duration, claude exit code, test.sh pass/fail, diff lines
 ```
 
-**Caveats baked into the methodology:**
-- Other plugins (`everything-claude-code`, `superpowers`, `warp`, `minimalist-entrepreneur`) were enabled in BOTH modes. The comparison is "claude-mind on top of these vs without." Not "vanilla Claude Code."
-- The runner only toggles claude-mind; doesn't isolate from network/API jitter.
-- Token usage not measured (`claude -p` doesn't expose stable per-call counts).
+**Caveats:**
+- Other plugins (`everything-claude-code`, `superpowers`, `warp`, `minimalist-entrepreneur`) enabled in BOTH modes.
+- Runner doesn't isolate from network/API jitter.
+- Token usage not measured.
 - No human raters, no "taste" measurement.
+- One-shot prompts only; no multi-turn sessions.
 
 ## Reproduction
 
@@ -103,7 +102,10 @@ Recorded: wall-clock duration, claude exit code, test.sh pass/fail, diff lines
 git clone https://github.com/iamgagan/claude-mind.git
 cd claude-mind
 
-# Baseline (plugin disabled)
+# Clear old results
+rm -f benchmark/results/*.json
+
+# Baseline
 claude plugins disable claude-mind
 for run in 1 2 3; do
   for task in 01-fizzbuzz 02-bug-fix-surgical 03-refactor-restraint; do
@@ -111,7 +113,7 @@ for run in 1 2 3; do
   done
 done
 
-# Plugin (v0.1.1+ enabled)
+# Plugin
 claude plugins enable claude-mind
 for run in 1 2 3; do
   for task in 01-fizzbuzz 02-bug-fix-surgical 03-refactor-restraint; do
@@ -122,6 +124,6 @@ done
 
 ## Roadmap
 
-- **v0.1.2** — fix Stop and PreToolUse hooks (stdin JSON parsing); re-benchmark
-- **v0.2 benchmark** — n≥10 per cell; bigger tasks (real GitHub issues); cold-cache runs; component-level evals (signal-detector precision/recall, brain-first hit rate)
-- **v0.3 benchmark** — interactive driver to test the full hook loop in the actual Claude Code app
+- **v0.2 benchmark** — n≥10 per cell; bigger tasks (real GitHub issues); multi-turn sessions
+- **Component-level evals** — signal-detector precision/recall, brain-first hit rate, synthesis quality rubric
+- **Long-session benchmark** — measure brain compounding over 10+ turns (the actual value proposition)

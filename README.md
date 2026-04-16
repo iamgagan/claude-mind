@@ -73,21 +73,21 @@ If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, s
 
 ## Benchmarks
 
-**v0.1.1 results** (n=3 per task × mode, 18 total runs):
+**v0.1.2 results** (n=3 per task × mode, 18 total runs, all 3 hooks firing):
 
-| Task | Baseline | Plugin | Δ |
-|---|---|---|---|
-| 01-fizzbuzz | 27.8±1.4s | 16.6±2.1s | **-40%** |
-| 02-bug-fix-surgical | 17.8±2.2s | 14.7±0.7s | **-18%** |
-| 03-refactor-restraint | 25.6±3.1s | 26.9±8.8s | +5% (noise) |
+| Task | Baseline | Plugin | Δ dur | Δ diff |
+|---|---|---|---|---|
+| 01-fizzbuzz | 19.3±4.1s / 16 lines | 13.9±3.0s / 16 lines | **-28%** ⚡ | 0 |
+| 02-bug-fix-surgical | 13.3±4.6s / 17 lines | 16.9±6.7s / 20±5 lines | +27% 🐢 | +3 |
+| 03-refactor-restraint | 16.4±0.8s / 9±2 lines | 24.1±3.1s / 8 lines | +47% 🐢 | -1 |
 
-100% pass rate in both modes. **Diff sizes byte-identical across modes** — meaning the "smaller diffs" claim is not yet supported.
+100% pass rate in both modes.
 
-**Provisional reading:** plugin appears faster on small tasks (likely real on simpler tasks; could be cache warmth or variance — n=3 too small to claim definitively). No measurable code-quality delta yet.
+**Honest reading:** Plugin is faster on trivial tasks, slower on non-trivial ones. Diff sizes are the same or slightly larger. The "smaller diffs" and "more surgical" claims are **not yet supported by data**. The overhead comes from hooks now actually firing (v0.1.1 showed false speedups because most hooks were broken).
 
-**Honest caveats:** 2 of 3 hooks are currently broken (Stop and PreToolUse — stdin parsing bug, fix in v0.1.2). The plugin v0.1.0 had ALL hooks broken due to a packaging bug. v0.1.1 fixed the packaging and the UserPromptSubmit hook now fires.
+**Where the value likely is:** brain-compounding over long sessions, taste-gate on real PRs, think-first preventing wrong-file edits — none of which a one-shot benchmark can measure.
 
-See [BENCHMARK.md](./BENCHMARK.md) for full methodology, caveats, and roadmap.
+See [BENCHMARK.md](./BENCHMARK.md) for full methodology, version comparison, and roadmap.
 
 ## Contributing
 
