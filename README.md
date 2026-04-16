@@ -71,6 +71,14 @@ If you have [`garrytan/gbrain`](https://github.com/garrytan/gbrain) installed, s
 - macOS, Linux, Windows-with-WSL: full support
 - Native Windows (no WSL): hooks skip silently; skills still work
 
+## Benchmarks
+
+**v0 benchmark (3 tasks × 3 iterations) showed no measurable difference** vs baseline Claude Code. Confirmed cause: `claude -p` non-interactive mode (the only available headless harness) does not fire hooks, so the plugin's core mechanisms — signal capture, session synthesis, think-first reminders — never run. Skills load but small one-shot prompts don't trigger them.
+
+In other words: **the value of claude-mind, if any, is delivered through hooks in interactive Claude Code sessions** — and we don't yet have a reliable way to benchmark that. See [benchmark/README.md](./benchmark/README.md) for raw numbers and the open problem.
+
+If you have ideas for how to benchmark a hook-dependent plugin headlessly, please open an issue.
+
 ## Contributing
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md).

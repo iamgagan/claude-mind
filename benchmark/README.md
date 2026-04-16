@@ -135,3 +135,39 @@ This harness is the smallest thing that could possibly produce a
 comparable number. It exists so we stop arguing about whether the
 plugin helps and start collecting data. It is not yet enough data to
 answer the question.
+
+## v0 results (2026-04-16) — null finding
+
+Ran 3 tasks × 3 iterations × 2 modes (18 invocations total) with
+claude-mind enabled vs disabled.
+
+| Task | Pass rate | Duration (mean ± sd) | Diff lines |
+|---|---|---|---|
+| 01-fizzbuzz | both 100% | baseline 16.6±1.2s, plugin 16.5±1.3s | both 16 |
+| 02-bug-fix-surgical | both 100% | baseline 12.6±2.3s, plugin 13.8±0.4s | both 17 |
+| 03-refactor-restraint | both 100% | baseline 20.9±7.3s, plugin 19.0±2.3s | both 8 |
+
+**Result: zero measurable effect.** Diff sizes byte-identical. Duration
+deltas within ±1σ noise. Pass rate identical at 100%.
+
+**Diagnosis (verified):** `claude -p` non-interactive mode does NOT fire
+the `UserPromptSubmit` or `Stop` hooks. Verified by running
+`claude -p "Let's switch from JWT to opaque tokens..."` in a directory
+with `./brain/` present and the plugin enabled — `_signals.md` and
+`_journal.md` remained empty. Direct invocation of the hook script
+works fine; the hook only runs when the **interactive Claude Code app**
+(not the `claude -p` CLI) processes a prompt.
+
+This means the v0 benchmark is **measuring the wrong thing** for
+claude-mind. The plugin's core mechanisms — always-on signal capture,
+session synthesis, think-first reminders — are hook-driven and never
+fire in `claude -p`. What the v0 benchmark actually measured was
+"skills loaded vs not" on small tasks where no skill was discriminably
+invoked.
+
+**Open problem:** how to benchmark a hook-dependent plugin when the
+only headless harness (`claude -p`) bypasses hooks. Suggestions
+welcome via GitHub issues. A v1 benchmark will likely need either
+(a) a scripted driver for the interactive app, (b) tasks designed to
+trigger skill invocation explicitly, or (c) a different definition
+of "value" that doesn't depend on the hook loop.
