@@ -1,7 +1,7 @@
 {
   "name": "claude-mind",
   "description": "The opinionated senior-engineer brain for Claude Code. Karpathy + Chang + Cherny + IndyDevDan + Tan, synthesized.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Gagan",
     "email": "gagan.2492@gmail.com"
