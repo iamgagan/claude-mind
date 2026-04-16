@@ -1,0 +1,35 @@
+{
+  "name": "claude-mind",
+  "metadata": {
+    "description": "The opinionated senior-engineer brain for Claude Code — 10 skills, 3 hooks, 4 commands, brain-first memory protocol"
+  },
+  "owner": {
+    "name": "Gagan",
+    "email": "gagan.2492@gmail.com"
+  },
+  "plugins": [
+    {
+      "name": "claude-mind",
+      "source": "./",
+      "description": "The opinionated senior-engineer brain for Claude Code. Synthesizes Karpathy + Chang + Cherny + IndyDevDan + Tan into 10 skills, 3 hooks, 4 commands.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Gagan",
+        "email": "gagan.2492@gmail.com"
+      },
+      "homepage": "https://github.com/iamgagan/claude-mind",
+      "repository": "https://github.com/iamgagan/claude-mind",
+      "license": "MIT",
+      "keywords": [
+        "brain",
+        "memory",
+        "minimalism",
+        "skills",
+        "hooks",
+        "taste",
+        "karpathy",
+        "gbrain"
+      ]
+    }
+  ]
+}
