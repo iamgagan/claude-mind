@@ -2,6 +2,16 @@
 
 All notable changes to Claude Mind. Hand-written; written for users, not machines.
 
+## v0.1.2 — 2026-04-16
+
+**Hook bug fix.** Stop and PreToolUse hooks now fire correctly.
+
+- Fixed: `hooks/stop.sh` and `hooks/pre-tool-use.sh` now read hook input as JSON from stdin (was: env vars). This matches how Claude Code actually passes hook payloads.
+- Updated: `test/hooks.test.ts` to use stdin JSON instead of env vars.
+- All 3 hooks (UserPromptSubmit, Stop, PreToolUse) now use the correct stdin JSON convention.
+
+All users on v0.1.1 should run `claude plugins update claude-mind` to get full hook coverage.
+
 ## v0.1.1 — 2026-04-16
 
 **Critical bug fix.** Hooks did not fire in v0.1.0.

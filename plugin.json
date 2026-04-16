@@ -1,6 +1,6 @@
 {
   "name": "claude-mind",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "The opinionated senior-engineer brain for Claude Code. Karpathy + Chang + Cherny + IndyDevDan + Tan, synthesized.",
   "author": "iamgagan",
   "license": "MIT",

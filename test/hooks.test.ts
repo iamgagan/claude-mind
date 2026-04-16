@@ -21,11 +21,16 @@ describe("stop.sh", () => {
   });
 
   test("appends to ./brain/_journal.md when transcript present", () => {
+    const stdinJson = JSON.stringify({
+      session_id: "test",
+      transcript_path: join(FIXTURE_DIR, "transcript-minimal.txt"),
+      cwd: tmp,
+    });
     const result = spawnSync("bash", [join(HOOK_DIR, "stop.sh")], {
       cwd: tmp,
+      input: stdinJson,
       env: {
         ...process.env,
-        CLAUDE_TRANSCRIPT_PATH: join(FIXTURE_DIR, "transcript-minimal.txt"),
         CLAUDE_PLUGIN_ROOT: join(import.meta.dir, ".."),
         // Force the fake-claude shim so test doesn't call the real CLI:
         PATH: `${join(import.meta.dir, "fixtures", "bin")}:${process.env.PATH}`,
@@ -40,19 +45,31 @@ describe("stop.sh", () => {
 
   test("exits 0 silently if no ./brain/ directory", () => {
     rmSync(join(tmp, "brain"), { recursive: true });
+    const stdinJson = JSON.stringify({
+      session_id: "test",
+      transcript_path: join(FIXTURE_DIR, "transcript-minimal.txt"),
+      cwd: tmp,
+    });
     const result = spawnSync("bash", [join(HOOK_DIR, "stop.sh")], {
       cwd: tmp,
-      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: join(FIXTURE_DIR, "transcript-minimal.txt") },
+      input: stdinJson,
+      env: { ...process.env },
     });
     expect(result.status).toBe(0);
   });
 
   test("exits 0 silently if claude CLI missing", () => {
+    const stdinJson = JSON.stringify({
+      session_id: "test",
+      transcript_path: join(FIXTURE_DIR, "transcript-minimal.txt"),
+      cwd: tmp,
+    });
     const result = spawnSync("bash", [join(HOOK_DIR, "stop.sh")], {
       cwd: tmp,
+      input: stdinJson,
       // PATH includes /bin and /usr/bin so bash itself resolves, but excludes
       // test/fixtures/bin so the fake `claude` shim is unreachable.
-      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: join(FIXTURE_DIR, "transcript-minimal.txt"), PATH: "/bin:/usr/bin" },
+      env: { ...process.env, PATH: "/bin:/usr/bin" },
     });
     expect(result.status).toBe(0);
   });
@@ -74,9 +91,16 @@ describe("pre-tool-use.sh", () => {
     const transcriptFile = join(tmp, "transcript.txt");
     require("node:fs").writeFileSync(transcriptFile, transcript);
 
+    const stdinJson = JSON.stringify({
+      session_id: "test",
+      tool_name: "Edit",
+      transcript_path: transcriptFile,
+      cwd: tmp,
+    });
     const result = spawnSync("bash", [join(HOOK_DIR, "pre-tool-use.sh")], {
       cwd: tmp,
-      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: transcriptFile, CLAUDE_TOOL_NAME: "Edit" },
+      input: stdinJson,
+      env: { ...process.env },
     });
     expect(result.status).toBe(0); // never blocks
     expect(result.stderr.toString()).toContain("think-first");
@@ -87,18 +111,31 @@ describe("pre-tool-use.sh", () => {
     const transcriptFile = join(tmp, "transcript.txt");
     require("node:fs").writeFileSync(transcriptFile, transcript);
 
+    const stdinJson = JSON.stringify({
+      session_id: "test",
+      tool_name: "Edit",
+      transcript_path: transcriptFile,
+      cwd: tmp,
+    });
     const result = spawnSync("bash", [join(HOOK_DIR, "pre-tool-use.sh")], {
       cwd: tmp,
-      env: { ...process.env, CLAUDE_TRANSCRIPT_PATH: transcriptFile, CLAUDE_TOOL_NAME: "Edit" },
+      input: stdinJson,
+      env: { ...process.env },
     });
     expect(result.status).toBe(0);
     expect(result.stderr.toString()).not.toContain("think-first");
   });
 
   test("silent for read-only tools", () => {
+    const stdinJson = JSON.stringify({
+      session_id: "test",
+      tool_name: "Read",
+      cwd: tmp,
+    });
     const result = spawnSync("bash", [join(HOOK_DIR, "pre-tool-use.sh")], {
       cwd: tmp,
-      env: { ...process.env, CLAUDE_TOOL_NAME: "Read" },
+      input: stdinJson,
+      env: { ...process.env },
     });
     expect(result.status).toBe(0);
     expect(result.stderr.toString()).toBe("");
