@@ -1,0 +1,10 @@
+{"prompt": "read src/auth/session.ts and tell me what's in it", "expected_signal": false, "expected_category": "none"}
+{"prompt": "I think we should switch from JWT to opaque tokens — the revocation story with JWT is killing us", "expected_signal": true, "expected_category": "decision"}
+{"prompt": "run the tests", "expected_signal": false, "expected_category": "none"}
+{"prompt": "Linus Torvalds gave a talk last week where he said rust in the kernel is a 5-year project not a 1-year project — worth remembering", "expected_signal": true, "expected_category": "fact"}
+{"prompt": "I prefer tabs over spaces in this repo, please follow that", "expected_signal": true, "expected_category": "preference"}
+{"prompt": "what does this function do", "expected_signal": false, "expected_category": "none"}
+{"prompt": "we can't use postgres 16 on this project — infra is stuck on 14 until Q3", "expected_signal": true, "expected_category": "fact"}
+{"prompt": "huh, I was reading about CRDTs last night and fell down a rabbit hole on Automerge vs Yjs — Yjs feels more production-ready but Automerge's conflict model is cleaner", "expected_signal": true, "expected_category": "rabbit-hole"}
+{"prompt": "let's go with option B, the synchronous one, because debuggability matters more than throughput here", "expected_signal": true, "expected_category": "decision"}
+{"prompt": "list files in this directory", "expected_signal": false, "expected_category": "none"}
