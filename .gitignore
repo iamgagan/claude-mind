@@ -12,6 +12,8 @@ dist/
 *.tsbuildinfo
 benchmark/.tmp/
 benchmark/results/*.json
+benchmark/results/v0.2/
+benchmark/results/long-session/
 !benchmark/results/.gitkeep
 .omc/
 brain/
