@@ -15,5 +15,9 @@ benchmark/results/*.json
 benchmark/results/v0.2/
 benchmark/results/long-session/
 !benchmark/results/.gitkeep
+benchmark/components/signal-detector/results/*.json
+!benchmark/components/signal-detector/results/.gitkeep
+benchmark/results-*/
+benchmark/components/
 .omc/
 brain/
